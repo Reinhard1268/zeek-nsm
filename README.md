@@ -1,7 +1,6 @@
 # Project Name — Zeek Network Security Monitoring & Anomaly Detection
 
-**Author:** Amoah Reinhard  
-**Platform:** Kali Linux | 32GB RAM  
+**Author:** Amoah Reinhard   
 **Stack:** Zeek · Suricata · Elasticsearch · Kibana · TheHive · Wazuh  
 ---
 
