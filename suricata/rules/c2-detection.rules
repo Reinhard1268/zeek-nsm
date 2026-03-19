@@ -1,0 +1,143 @@
+# File: c2-detection.rules
+# SID range: 9000001 - 9000099
+
+# Cobalt Strike default HTTP GET beacon jQuery profile
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"C2 COBALT STRIKE Default HTTP Beacon jQuery Profile";
+    flow:established,to_server;
+    http.method; content:"GET";
+    http.uri; content:"/jquery-"; startswith;
+    http.uri; content:".min.js"; endswith;
+    http.user_agent; content:"Mozilla/5.0";
+    threshold:type limit, track by_src, count 1, seconds 300;
+    classtype:trojan-activity;
+    sid:9000001; rev:1;
+    metadata:mitre_id T1071.001;
+)
+
+# Cobalt Strike JA3 fingerprint default
+alert tls $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"C2 COBALT STRIKE TLS JA3 Fingerprint Default";
+    flow:established,to_server;
+    ja3.hash; content:"a0e9f5d64349fb13191bc781f81f42e1";
+    threshold:type limit, track by_src, count 1, seconds 600;
+    classtype:trojan-activity;
+    sid:9000002; rev:1;
+    metadata:mitre_id T1071.001;
+)
+
+# Cobalt Strike HTTP POST check-in
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"C2 COBALT STRIKE HTTP POST Check-in";
+    flow:established,to_server;
+    http.method; content:"POST";
+    http.uri; content:"/jquery-"; startswith;
+    http.request_body; content:!"<";
+    dsize:32:256;
+    threshold:type both, track by_src, count 5, seconds 600;
+    classtype:trojan-activity;
+    sid:9000003; rev:1;
+    metadata:mitre_id T1071.001;
+)
+
+# Cobalt Strike DNS beacon
+alert dns $HOME_NET any -> any 53 (
+    msg:"C2 COBALT STRIKE DNS Lookup Pattern";
+    dns.query; content:".stage.";
+    threshold:type limit, track by_src, count 1, seconds 300;
+    classtype:trojan-activity;
+    sid:9000004; rev:1;
+    metadata:mitre_id T1071.004;
+)
+
+# Cobalt Strike x64 stager download
+alert http $EXTERNAL_NET any -> $HOME_NET any (
+    msg:"C2 COBALT STRIKE x64 Stager Download";
+    flow:established,to_client;
+    http.stat_code; content:"200";
+    file.data; content:"|fc 48 83 e4 f0|";
+    classtype:trojan-activity;
+    sid:9000005; rev:1;
+    metadata:mitre_id T1059.001;
+)
+
+# Long DNS subdomain tunneling
+alert dns $HOME_NET any -> any 53 (
+    msg:"C2 DNS Long Query Possible Tunneling";
+    dns.query; content:".";
+    dns.query; depth:0; offset:0;
+    dsize:>100;
+    threshold:type both, track by_src, count 10, seconds 60;
+    classtype:policy-violation;
+    sid:9000006; rev:1;
+    metadata:mitre_id T1071.004;
+)
+
+# Regular HTTP GET beacon pattern
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"C2 BEACON Regular HTTP GET Pattern";
+    flow:established,to_server;
+    http.method; content:"GET";
+    http.uri; content:!"/";
+    urilen:8<>30;
+    threshold:type both, track by_src, count 10, seconds 600;
+    classtype:trojan-activity;
+    sid:9000007; rev:1;
+    metadata:mitre_id T1071.001;
+)
+
+# TLS non-standard port suspicious cert
+alert tls $HOME_NET any -> $EXTERNAL_NET !443 (
+    msg:"C2 TLS Non-Standard Port Suspicious Cert";
+    flow:established,to_server;
+    tls.cert_subject; content:"CN=";
+    tls.cert_issuer; content:"CN=";
+    threshold:type limit, track by_src, count 1, seconds 600;
+    classtype:trojan-activity;
+    sid:9000008; rev:1;
+    metadata:mitre_id T1573.002;
+)
+
+# AsyncRAT JA3 fingerprint
+alert tls $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"C2 ASYNCRAT TLS JA3 Fingerprint";
+    flow:established,to_server;
+    ja3.hash; content:"de9f2c7fd25e1b3afad3e85a0bd17d9b";
+    threshold:type limit, track by_src, count 1, seconds 600;
+    classtype:trojan-activity;
+    sid:9000009; rev:1;
+    metadata:mitre_id T1573.002;
+)
+
+# Sliver C2 JA3
+alert tls $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"C2 SLIVER TLS JA3 Fingerprint";
+    flow:established,to_server;
+    ja3.hash; content:"4d7a28d6f2263ed61de88ca66eb011e3";
+    threshold:type limit, track by_src, count 1, seconds 600;
+    classtype:trojan-activity;
+    sid:9000010; rev:1;
+    metadata:mitre_id T1071.001;
+)
+
+# Python requests user agent
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"C2 SUSPICIOUS Python requests User-Agent";
+    flow:established,to_server;
+    http.user_agent; content:"python-requests/"; startswith;
+    threshold:type both, track by_src, count 3, seconds 300;
+    classtype:policy-violation;
+    sid:9000011; rev:1;
+    metadata:mitre_id T1071.001;
+)
+
+# Go HTTP client user agent
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"C2 Go-http-client User-Agent Suspicious";
+    flow:established,to_server;
+    http.user_agent; content:"Go-http-client/";
+    threshold:type both, track by_src, count 5, seconds 300;
+    classtype:policy-violation;
+    sid:9000012; rev:1;
+    metadata:mitre_id T1071.001;
+)

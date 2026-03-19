@@ -1,0 +1,101 @@
+#environment
+.env
+.env.local
+.env.production
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+pip-debug.log
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# ML Models (too large for git)
+*.pkl
+*.joblib
+*.h5
+*.model
+anomaly-detection/dga/domain-wordlists/*.pkl
+
+# Zeek compiled files
+*.bif.func_def
+*.bif.func_h
+*.bif.func_init
+*.bif.netvar_h
+*.bif.register.cc
+*.bif.cc
+*.bif.h
+load.zeek
+*.pyo
+
+# Zeek logs (generated at runtime - not for git)
+zeek/logs/*.log
+zeek/logs/*.gz
+zeek/logs/current/
+suricata/logs/*.log
+suricata/logs/*.json
+suricata/alerts/*.json
+logs/
+
+# PCAP files (too large + potential legal issues)
+*.pcap
+*.pcapng
+*.cap
+pcap-analysis/samples/*.pcap
+pcap-analysis/samples/*.pcapng
+
+# Scan results (generated at runtime)
+scanners/scan-results/*.json
+scanners/scan-results/*.xml
+
+# API keys and credentials
+credentials.json
+secrets.yml
+config/secrets*
+*_credentials*
+*_secrets*
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test outputs
+.pytest_cache/
+.coverage
+htmlcov/
+test-results/
+*.test.log
+
+# Docker
+docker-compose.override.yml
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/

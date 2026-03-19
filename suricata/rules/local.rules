@@ -1,0 +1,85 @@
+# File: local.rules
+
+# Alert on any outbound connection from sensitive hosts
+alert ip 192.168.1.35 any -> $EXTERNAL_NET any (
+    msg:"LOCAL POLICY Domain Controller External Connection";
+    threshold:type limit, track by_src, count 1, seconds 600;
+    classtype:policy-violation;
+    sid:9009001; rev:1;
+)
+
+# Alert on known-bad C2 IPs
+alert ip $HOME_NET any -> [45.33.32.156,185.220.101.45,91.92.241.103] any (
+    msg:"LOCAL IOC Known C2 IP Connection";
+    threshold:type limit, track by_src, count 1, seconds 300;
+    classtype:trojan-activity;
+    sid:9009002; rev:1;
+    metadata:mitre_id T1071;
+)
+
+# DNS query to known C2 domain
+alert dns $HOME_NET any -> any 53 (
+    msg:"LOCAL IOC Known C2 Domain c2ops.net";
+    dns.query; content:"c2ops.net"; endswith;
+    threshold:type limit, track by_src, count 1, seconds 300;
+    classtype:trojan-activity;
+    sid:9009003; rev:1;
+    metadata:mitre_id T1071.004;
+)
+
+alert dns $HOME_NET any -> any 53 (
+    msg:"LOCAL IOC Known DGA Domain jquery-cdn.net";
+    dns.query; content:"jquery-cdn.net"; endswith;
+    threshold:type limit, track by_src, count 1, seconds 300;
+    classtype:trojan-activity;
+    sid:9009004; rev:1;
+    metadata:mitre_id T1071.001;
+)
+
+# SSH lateral movement
+alert tcp $HOME_NET any -> $HOME_NET 22 (
+    msg:"LOCAL POLICY Internal SSH Lateral Access";
+    flow:established,to_server;
+    threshold:type both, track by_src, count 5, seconds 300;
+    classtype:policy-violation;
+    sid:9009005; rev:1;
+    metadata:mitre_id T1021.004;
+)
+
+# Telnet usage
+alert tcp $HOME_NET any -> any 23 (
+    msg:"LOCAL POLICY Telnet Usage Detected";
+    flow:established,to_server;
+    classtype:policy-violation;
+    sid:9009006; rev:1;
+)
+
+# ICMP ping sweep
+alert icmp $HOME_NET any -> $HOME_NET any (
+    msg:"LOCAL RECON Internal ICMP Ping Sweep";
+    itype:8;
+    threshold:type both, track by_src, count 20, seconds 60;
+    classtype:attempted-recon;
+    sid:9009007; rev:1;
+    metadata:mitre_id T1018;
+)
+
+# SYN port scan
+alert tcp $HOME_NET any -> $HOME_NET any (
+    msg:"LOCAL RECON Internal Port Scan SYN Sweep";
+    flow:stateless;
+    flags:S;
+    threshold:type both, track by_src, count 50, seconds 60;
+    classtype:attempted-recon;
+    sid:9009008; rev:1;
+    metadata:mitre_id T1046;
+)
+
+# Integration test rule
+alert http $HOME_NET any -> any any (
+    msg:"LOCAL TEST Suricata-Wazuh Integration Test Alert";
+    flow:established,to_server;
+    http.uri; content:"/suricata-test-alert";
+    classtype:not-suspicious;
+    sid:9009010; rev:1;
+)

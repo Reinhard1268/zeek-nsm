@@ -1,0 +1,94 @@
+# File: exfiltration.rules
+# SID range: 9002001 - 9002099
+
+# Large HTTP POST to external
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"EXFIL Large HTTP POST to External Host";
+    flow:established,to_server;
+    http.method; content:"POST";
+    http.request_body_len; >5242880;
+    threshold:type limit, track by_src, count 1, seconds 300;
+    classtype:policy-violation;
+    sid:9002001; rev:1;
+    metadata:mitre_id T1048.003;
+)
+
+# HTTP PUT upload
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"EXFIL HTTP PUT Upload to External";
+    flow:established,to_server;
+    http.method; content:"PUT";
+    http.request_body_len; >1048576;
+    threshold:type both, track by_src, count 3, seconds 300;
+    classtype:policy-violation;
+    sid:9002002; rev:1;
+    metadata:mitre_id T1048.003;
+)
+
+# DNS TXT record large content
+alert dns any any -> any 53 (
+    msg:"EXFIL DNS TXT Record Large Content C2 Channel";
+    dns.query; content:".";
+    dns.type; content:"TXT";
+    dsize:>100;
+    threshold:type both, track by_src, count 5, seconds 60;
+    classtype:trojan-activity;
+    sid:9002003; rev:1;
+    metadata:mitre_id T1071.004;
+)
+
+# High rate DNS queries (tunnel)
+alert dns $HOME_NET any -> any 53 (
+    msg:"EXFIL DNS Subdomain Tunneling High Query Rate";
+    dns.query; content:".";
+    dsize:>60;
+    threshold:type both, track by_src, count 50, seconds 60;
+    classtype:policy-violation;
+    sid:9002004; rev:1;
+    metadata:mitre_id T1071.004;
+)
+
+# Base64 subdomain exfil
+alert dns $HOME_NET any -> any 53 (
+    msg:"EXFIL DNS Base64 Subdomain Exfiltration Pattern";
+    dns.query; pcre:"/^[A-Za-z0-9+\/]{40,}=*\./";
+    threshold:type both, track by_src, count 3, seconds 60;
+    classtype:trojan-activity;
+    sid:9002005; rev:1;
+    metadata:mitre_id T1048;
+)
+
+# ICMP tunnel large payload
+alert icmp $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"EXFIL ICMP Tunnel Large Payload";
+    itype:8;
+    dsize:>100;
+    threshold:type both, track by_src, count 20, seconds 60;
+    classtype:policy-violation;
+    sid:9002006; rev:1;
+    metadata:mitre_id T1048;
+)
+
+# FTP STOR upload
+alert ftp $HOME_NET any -> $EXTERNAL_NET 21 (
+    msg:"EXFIL FTP STOR Upload to External";
+    flow:established,to_server;
+    content:"STOR"; nocase;
+    threshold:type limit, track by_src, count 1, seconds 300;
+    classtype:policy-violation;
+    sid:9002007; rev:1;
+    metadata:mitre_id T1048.003;
+)
+
+# Large upload to cloud storage
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"EXFIL Large Upload to Cloud Storage";
+    flow:established,to_server;
+    http.method; content:"PUT";
+    http.host; content:"amazonaws.com";
+    http.request_body_len; >52428800;
+    threshold:type limit, track by_src, count 1, seconds 600;
+    classtype:policy-violation;
+    sid:9002008; rev:1;
+    metadata:mitre_id T1567.002;
+)

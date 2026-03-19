@@ -1,0 +1,209 @@
+[
+  {
+    "timestamp": "2024-06-15T08:23:11.482Z",
+    "flow_id": 1234567890123,
+    "in_iface": "eth0",
+    "event_type": "alert",
+    "src_ip": "192.168.1.55",
+    "src_port": 49201,
+    "dest_ip": "45.33.32.156",
+    "dest_port": 80,
+    "proto": "TCP",
+    "alert": {
+      "action": "allowed",
+      "gid": 1,
+      "signature_id": 9000001,
+      "rev": 3,
+      "signature": "C2 COBALT STRIKE Default HTTP Beacon",
+      "category": "Trojan Activity",
+      "severity": 1
+    },
+    "http": {
+      "hostname": "45.33.32.156",
+      "url": "/submit.php",
+      "http_user_agent": "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)",
+      "http_method": "GET",
+      "protocol": "HTTP/1.1",
+      "status": 200,
+      "length": 128
+    },
+    "flow": {
+      "pkts_toserver": 4,
+      "pkts_toclient": 3,
+      "bytes_toserver": 512,
+      "bytes_toclient": 384,
+      "start": "2024-06-15T08:23:11.000Z"
+    }
+  },
+  {
+    "timestamp": "2024-06-15T08:45:02.119Z",
+    "flow_id": 9876543210987,
+    "in_iface": "eth0",
+    "event_type": "alert",
+    "src_ip": "192.168.1.42",
+    "src_port": 52301,
+    "dest_ip": "185.220.101.10",
+    "dest_port": 443,
+    "proto": "TCP",
+    "alert": {
+      "action": "allowed",
+      "gid": 1,
+      "signature_id": 9000002,
+      "rev": 2,
+      "signature": "C2 COBALT STRIKE TLS JA3 Fingerprint",
+      "category": "Trojan Activity",
+      "severity": 1
+    },
+    "tls": {
+      "subject": "CN=lab.example.com",
+      "issuerdn": "CN=lab.example.com",
+      "serial": "00:DE:AD:BE:EF:00",
+      "fingerprint": "a0:e9:f5:d6:43:49:fb:13:19:1b:c7:81:f8:1f:42:e1",
+      "ja3": {
+        "hash": "a0e9f5d64349fb13191bc781f81f42e1",
+        "string": "771,4866-4867-4865,0-23-65281-10-11-35-16-5-13-18-51-45-43-27,29-23-24,0"
+      },
+      "notbefore": "2024-01-01T00:00:00",
+      "notafter": "2025-01-01T00:00:00"
+    },
+    "flow": {
+      "pkts_toserver": 12,
+      "pkts_toclient": 10,
+      "bytes_toserver": 2048,
+      "bytes_toclient": 1024,
+      "start": "2024-06-15T08:45:00.000Z"
+    }
+  },
+  {
+    "timestamp": "2024-06-15T09:10:33.774Z",
+    "flow_id": 1111222233334,
+    "in_iface": "eth0",
+    "event_type": "alert",
+    "src_ip": "192.168.1.78",
+    "src_port": 60001,
+    "dest_ip": "8.8.8.8",
+    "dest_port": 53,
+    "proto": "UDP",
+    "alert": {
+      "action": "allowed",
+      "gid": 1,
+      "signature_id": 9000006,
+      "rev": 2,
+      "signature": "C2 DNS Long Query Possible Tunneling",
+      "category": "Policy Violation",
+      "severity": 2
+    },
+    "dns": {
+      "type": "query",
+      "id": 12345,
+      "rrname": "aGVsbG8td29ybGQtdGhpcy1pcy1hLXRlc3QtZm9yLWRucy10dW5uZWxpbmctZGV0ZWN0aW9u.evil.com",
+      "rrtype": "A",
+      "tx_id": 0
+    },
+    "flow": {
+      "pkts_toserver": 1,
+      "pkts_toclient": 0,
+      "bytes_toserver": 128,
+      "bytes_toclient": 0,
+      "start": "2025-06-15T09:10:33.000Z"
+    }
+  },
+  {
+    "timestamp": "2025-06-15T10:22:45.001Z",
+    "flow_id": 5555666677778,
+    "in_iface": "eth0",
+    "event_type": "alert",
+    "src_ip": "192.168.1.55",
+    "src_port": 49455,
+    "dest_ip": "192.168.1.20",
+    "dest_port": 445,
+    "proto": "TCP",
+    "alert": {
+      "action": "allowed",
+      "gid": 1,
+      "signature_id": 9001002,
+      "rev": 3,
+      "signature": "LATERAL MOVEMENT PsExec Service Binary Detected",
+      "category": "Trojan Activity",
+      "severity": 1
+    },
+    "smb": {
+      "id": 1,
+      "dialect": "3.11",
+      "command": "SMB2_COMMAND_WRITE",
+      "status": "STATUS_SUCCESS",
+      "filename": "PSEXESVC.exe",
+      "share": "ADMIN$"
+    },
+    "flow": {
+      "pkts_toserver": 8,
+      "pkts_toclient": 6,
+      "bytes_toserver": 65536,
+      "bytes_toclient": 1024,
+      "start": "2025-11-15T10:22:44.000Z"
+    }
+  },
+  {
+    "timestamp": "2025-11-15T11:05:18.322Z",
+    "flow_id": 9999000011112,
+    "in_iface": "eth0",
+    "event_type": "alert",
+    "src_ip": "192.168.1.42",
+    "src_port": 51200,
+    "dest_ip": "203.0.113.55",
+    "dest_port": 80,
+    "proto": "TCP",
+    "alert": {
+      "action": "allowed",
+      "gid": 1,
+      "signature_id": 9002001,
+      "rev": 2,
+      "signature": "EXFIL Large HTTP POST to External",
+      "category": "Policy Violation",
+      "severity": 2
+    },
+    "http": {
+      "hostname": "203.0.113.55",
+      "url": "/upload",
+      "http_user_agent": "python-requests/2.28.0",
+      "http_method": "POST",
+      "protocol": "HTTP/1.1",
+      "status": 200,
+      "length": 5242880
+    },
+    "flow": {
+      "pkts_toserver": 3800,
+      "pkts_toclient": 5,
+      "bytes_toserver": 5243392,
+      "bytes_toclient": 256,
+      "start": "2025-12-15T11:05:10.000Z"
+    }
+  },
+  {
+    "timestamp": "2025-11-15T13:30:00.000Z",
+    "flow_id": 3333444455556,
+    "in_iface": "eth0",
+    "event_type": "alert",
+    "src_ip": "192.168.1.33",
+    "src_port": 49600,
+    "dest_ip": "192.168.1.15",
+    "dest_port": 3389,
+    "proto": "TCP",
+    "alert": {
+      "action": "allowed",
+      "gid": 1,
+      "signature_id": 9001003,
+      "rev": 2,
+      "signature": "LATERAL MOVEMENT RDP Brute Force Attempt",
+      "category": "Attempted User Privilege Gain",
+      "severity": 1
+    },
+    "flow": {
+      "pkts_toserver": 22,
+      "pkts_toclient": 0,
+      "bytes_toserver": 1320,
+      "bytes_toclient": 0,
+      "start": "2025-06-15T13:29:58.000Z"
+    }
+  }
+]

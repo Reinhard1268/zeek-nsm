@@ -1,0 +1,176 @@
+{
+  "_meta": {
+    "file": "suricata-eve-pipeline.json",
+    "location": "05-zeek-nsm/elastic/ingest-pipelines/suricata-eve-pipeline.json",
+    "description": "Suricata EVE JSON ingest pipeline for Elasticsearch 8.x"
+  },
+  "description": "Suricata EVE JSON ingest pipeline — maps fields to ECS",
+  "processors": [
+    { "set": { "field": "event.module",  "value": "suricata" } },
+    {
+      "set": {
+        "field": "event.dataset",
+        "value": "suricata.{{ ctx.event_type }}",
+        "if": "ctx.event_type != null"
+      }
+    },
+    {
+      "date": {
+        "field": "timestamp",
+        "formats": ["ISO8601", "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"],
+        "target_field": "@timestamp",
+        "ignore_failure": false
+      }
+    },
+    { "rename": { "field": "src_ip",   "target_field": "source.ip",        "ignore_missing": true } },
+    { "rename": { "field": "src_port", "target_field": "source.port",      "ignore_missing": true } },
+    { "rename": { "field": "dest_ip",  "target_field": "destination.ip",   "ignore_missing": true } },
+    { "rename": { "field": "dest_port","target_field": "destination.port", "ignore_missing": true } },
+    { "rename": { "field": "proto",    "target_field": "network.transport", "ignore_missing": true } },
+    { "rename": { "field": "in_iface", "target_field": "observer.ingress.interface.name", "ignore_missing": true } },
+    {
+      "rename": {
+        "field": "alert.signature",
+        "target_field": "rule.name",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "alert.signature_id",
+        "target_field": "rule.id",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "alert.category",
+        "target_field": "rule.category",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "alert.severity",
+        "target_field": "event.severity",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "alert.action",
+        "target_field": "event.action",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "http.hostname",
+        "target_field": "url.domain",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "http.url",
+        "target_field": "url.path",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "http.http_user_agent",
+        "target_field": "user_agent.original",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "http.http_method",
+        "target_field": "http.request.method",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "http.status",
+        "target_field": "http.response.status_code",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "dns.rrname",
+        "target_field": "dns.question.name",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "dns.rrtype",
+        "target_field": "dns.question.type",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "tls.subject",
+        "target_field": "tls.server.subject",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "tls.issuerdn",
+        "target_field": "tls.server.issuer",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "tls.ja3.hash",
+        "target_field": "tls.client.ja3",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "flow.bytes_toserver",
+        "target_field": "source.bytes",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "flow.bytes_toclient",
+        "target_field": "destination.bytes",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "flow.pkts_toserver",
+        "target_field": "source.packets",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "flow.pkts_toclient",
+        "target_field": "destination.packets",
+        "ignore_missing": true
+      }
+    },
+    { "geoip": { "field": "destination.ip", "target_field": "destination.geo", "ignore_missing": true, "ignore_failure": true } },
+    { "geoip": { "field": "source.ip",      "target_field": "source.geo",      "ignore_missing": true, "ignore_failure": true } },
+    { "set": { "field": "event.kind", "value": "alert", "if": "ctx.event_type == 'alert'" } },
+    { "set": { "field": "event.kind", "value": "event", "if": "ctx.event_type != 'alert'" } },
+    { "set": { "field": "event.category", "value": ["network", "intrusion_detection"], "if": "ctx.event_type == 'alert'" } },
+    { "set": { "field": "event.category", "value": ["network"], "if": "ctx.event_type != 'alert'" } },
+    { "remove": { "field": ["timestamp", "flow_id", "event_type", "alert", "flow"], "ignore_missing": true } }
+  ],
+  "on_failure": [
+    { "set": { "field": "error.message", "value": "{{ _ingest.on_failure_message }}" } },
+    { "set": { "field": "event.dataset", "value": "suricata.eve" } }
+  ]
+}

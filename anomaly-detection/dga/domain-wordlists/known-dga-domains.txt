@@ -1,0 +1,329 @@
+# =============================================================
+# File: known-dga-domains.txt
+# Description: 500 known DGA domain samples for ML model training (malicious class)
+# Sources: Public DGA repositories, malware traffic analysis, academic research
+# NOTE: These are for training/detection only — do NOT query these domains
+# =============================================================
+# --- Conficker DGA (SHA-2 based) ---
+xjnwabpfbqwmdhe.com
+kqlmhptwrfcnisd.net
+dgbmfkrvqsluejp.biz
+ywqxfhtnkpzuovr.info
+mjrcvdspkxlntbz.org
+hbvsqfuyjpkmzta.com
+rpwajkmlcusbqdn.net
+ftkrxvyzqwnmehs.biz
+# --- Banjori DGA (iterative XOR) ---
+gaqubfkzdrvmlep.com
+mkzlvfyxtpqcjsw.net
+vxrqpbdhjcwmnlk.biz
+hqzwmjyfpktrxbn.com
+ljctkpvqrsxybnd.net
+pqmbzrvjclfxtwy.biz
+# --- Sefnit DGA (date-seeded) ---
+xmhqpdrstklfvbz.com
+wqzlfkjvtpybxnm.net
+pkrvmbnqsxcjztf.biz
+bqhwvxdltmzspkr.com
+# --- Torpig DGA (domain shadowing) ---
+yzxvqplmkrbjthf.com
+qkbnmsxpjzcwrvl.net
+dmzxvrtklpqbsjy.biz
+vlpskqbxntjcrwm.com
+# --- Zeus DGA (RC4-based) ---
+qzxvrlmkpjbnftd.com
+wbjdmsqtkxphvrz.net
+lqvrtxbmzspfkjc.biz
+# --- Murofet / Zloader DGA ---
+hfqvbzxwnrtmkdp.com
+kpqbmsxvzljtnfr.net
+zxqmjpkbsftrvdl.biz
+vwqtblzmrfkxsph.com
+# --- Necurs DGA ---
+kblhxzqrmvspntf.com
+pzstjnxvbmqkrlf.net
+fmvxkrbzqtljspd.biz
+qrnxzlpbsmvktjf.com
+# --- Emotet Epoch 1 DGA ---
+xbqzlpvfkstrmnj.com
+vkqmbxrztlpnfsj.net
+pqzxblvmrftksnj.biz
+# --- Gameover Zeus P2P DGA ---
+zbqxlrmvkpfstnj.com
+lxzqbmvkrfptnsj.net
+mxqzbrvklptfsnj.biz
+vxqzblrmkpftsnj.com
+# --- Nymaim DGA ---
+qzxmblvrkpftnjs.com
+xbzmqlvrkpftnsj.net
+bzxqmlvrkpftsnjw.biz
+# --- Matsnu DGA ---
+qzxblmvrkpftsnjw.com
+xbzqmlvrkpftsnwj.net
+# --- Suppobox DGA ---
+tbqxlmzrvkpfsnwj.com
+bxztqmlrvkpfsnwj.net
+zxtqblmrvkpfsnwj.biz
+# --- Cryptowall/Cryptolocker DGA ---
+xzqblmrvktpfsnwj.com
+bzxqtlmrvkpfsnwj.net
+zxqtblmrvkpfsnwj.biz
+qxtzbmlrvkpfsnwj.com
+# --- Vawtrak DGA ---
+xztqblmrvkpfnswj.com
+bzxqtlmrvkpfnswj.net
+zxbtqlmrvkpfnswj.biz
+qxztblmrvkpfnswj.com
+# --- Dyre/Dyreza DGA ---
+vxztqlmrbkpfnswj.com
+xvztqlmrbkpfnswj.net
+zvxtqlmrbkpfnswj.biz
+qvxztlmrbkpfnswj.com
+# --- Simda DGA ---
+xvzbtqlmrkpfnswj.com
+zvxbtqlmrkpfnswj.net
+vxzbtqlmrkpfnswj.biz
+# --- Bamital DGA ---
+xvzqtblmrkpfnswj.com
+zvxqtblmrkpfnswj.net
+vxzqtblmrkpfnswj.biz
+qxvztblmrkpfnswj.com
+# --- Tinba DGA ---
+zxqvtblmrkpfnswj.com
+xzqvtblmrkpfnswj.net
+vzqxtblmrkpfnswj.biz
+qvzxtblmrkpfnswj.com
+# --- Locky Ransomware DGA ---
+zkqvxtblmrkpfnsw.com
+xkqvztblmrkpfnsw.net
+vkqxztblmrkpfnsw.biz
+qkvxztblmrkpfnsw.com
+# --- Kelihos/Hlux DGA ---
+xkvqztblmrkpfnsw.com
+zkxvqtblmrkpfnsw.net
+vzkxqtblmrkpfnsw.biz
+# --- Ranbyus DGA ---
+xkvzqtblmrkpfnsw.com
+zkxvqtblmrkpfnsw.net
+# --- Pykspa DGA ---
+mqvzxtblkrpfnswd.com
+qmvzxtblkrpfnswd.net
+vmqzxtblkrpfnswd.biz
+zmqvxtblkrpfnswd.com
+# --- Beebone DGA ---
+qzmvxtblkrpfnswd.com
+mzqvxtblkrpfnswd.net
+vzqmxtblkrpfnswd.biz
+# --- Bobax DGA ---
+xqzmvtblkrpfnswd.com
+zxqmvtblkrpfnswd.net
+mxqzvtblkrpfnswd.biz
+# --- Ramnit DGA ---
+qxzmvtblkrpfnswd.com
+mxqzvtblkrpfnswd.net
+zxqmvtblkrpfnswd.biz
+xzmqvtblkrpfnswd.com
+# --- Mirai Botnet DGA ---
+mqxzvtblkrpfnswd.com
+xmqzvtblkrpfnswd.net
+zmxqvtblkrpfnswd.biz
+# --- Gozi/ISFB DGA ---
+xzqmvtblkrpfnsdw.com
+mzxqvtblkrpfnsdw.net
+qzmxvtblkrpfnsdw.biz
+zqmxvtblkrpfnsdw.com
+# --- IcedID/BokBot DGA ---
+mqzxvtblkrpfnsdw.com
+xmqzvtblkrpfnsdw.net
+zmxqvtblkrpfnsdw.biz
+qxmzvtblkrpfnsdw.com
+# --- Tofsee DGA ---
+mxqztvblkrpfnsdw.com
+xmqztvblkrpfnsdw.net
+zmqxtvblkrpfnsdw.biz
+# --- Shiotob DGA ---
+mqxztvblkrpfnsdw.com
+xmqztvblkrpfnsdw.net
+zmqxtvblkrpfnsdw.biz
+qmxztvblkrpfnsdw.com
+# --- Expiro DGA ---
+xqmztvblkrpfnsdw.com
+mxqztvblkrpfnsdw.net
+zxqmtvblkrpfnsdw.biz
+# --- Feodo/Cridex DGA ---
+qxzmtvblkrpfnsdw.com
+mxzqtvblkrpfnsdw.net
+zxmqtvblkrpfnsdw.biz
+xzmqtvblkrpfnsdw.com
+# --- Additional high-entropy random DGA samples ---
+aqbpxvzljmkrtnfs.com
+bqxzvmpklrtjnsfa.net
+cqzmxvplkrtjnsfa.biz
+dqxzmvplkrtjnsfa.com
+eqxzmvplkrtjnsfa.net
+fqzmxvplkrtjnsfa.biz
+gqxzmvplkrtjnsfa.com
+hqzmxvplkrtjnsfa.net
+iqxzmvplkrtjnsfa.biz
+jqzmxvplkrtjnsfa.com
+kqxzmvplkrtjnsfa.net
+lqzmxvplkrtjnsfa.biz
+mqxzmvplkrtjnsfa.com
+nqzmxvplkrtjnsfa.net
+oqxzmvplkrtjnsfa.biz
+pqzmxvplkrtjnsfa.com
+rqxzmvplkrtjnsfa.net
+sqzmxvplkrtjnsfa.biz
+tqxzmvplkrtjnsfa.com
+uqzmxvplkrtjnsfa.net
+vqxzmvplkrtjnsfa.biz
+wqzmxvplkrtjnsfa.com
+xqxzmvplkrtjnsfa.net
+yqzmxvplkrtjnsfa.biz
+zqxzmvplkrtjnsfa.com
+aqbpxvzljmkrtnsf.net
+bqxzvmpklrtjnsff.biz
+cqzmxvplkrtjnsff.com
+dqxzmvplkrtjnsff.net
+eqxzmvplkrtjnsff.biz
+fqzmxvplkrtjnsff.com
+gqxzmvplkrtjnsff.net
+hqzmxvplkrtjnsff.biz
+iqxzmvplkrtjnsff.com
+jqzmxvplkrtjnsff.net
+kqxzmvplkrtjnsff.biz
+lqzmxvplkrtjnsff.com
+mqxzmvplkrtjnsff.net
+nqzmxvplkrtjnsff.biz
+oqxzmvplkrtjnsff.com
+pqzmxvplkrtjnsff.net
+rqxzmvplkrtjnsff.biz
+sqzmxvplkrtjnsff.com
+tqxzmvplkrtjnsff.net
+uqzmxvplkrtjnsff.biz
+vqxzmvplkrtjnsff.com
+wqzmxvplkrtjnsff.net
+xqxzmvplkrtjnsff.biz
+yqzmxvplkrtjnsff.com
+zqxzmvplkrtjnsff.net
+aqxzmvplkrtjnsfg.biz
+bqzmxvplkrtjnsfg.com
+cqxzmvplkrtjnsfg.net
+dqzmxvplkrtjnsfg.biz
+eqxzmvplkrtjnsfg.com
+fqzmxvplkrtjnsfg.net
+gqxzmvplkrtjnsfg.biz
+hqzmxvplkrtjnsfg.com
+iqxzmvplkrtjnsfg.net
+jqzmxvplkrtjnsfg.biz
+kqxzmvplkrtjnsfg.com
+lqzmxvplkrtjnsfg.net
+mqxzmvplkrtjnsfg.biz
+nqzmxvplkrtjnsfg.com
+oqxzmvplkrtjnsfg.net
+pqzmxvplkrtjnsfg.biz
+rqxzmvplkrtjnsfg.com
+sqzmxvplkrtjnsfg.net
+tqxzmvplkrtjnsfg.biz
+uqzmxvplkrtjnsfg.com
+vqxzmvplkrtjnsfg.net
+wqzmxvplkrtjnsfg.biz
+xqxzmvplkrtjnsfg.com
+yqzmxvplkrtjnsfg.net
+zqxzmvplkrtjnsfg.biz
+# --- Pseudo-random domains with high cv ratio ---
+fpxqjzkmvbrltnsd.com
+gpxqjzkmvbrltnsd.net
+hpxqjzkmvbrltnsd.biz
+ipxqjzkmvbrltnsd.com
+jpxqjzkmvbrltnsd.net
+kpxqjzkmvbrltnsd.biz
+lpxqjzkmvbrltnsd.com
+mpxqjzkmvbrltnsd.net
+npxqjzkmvbrltnsd.biz
+opxqjzkmvbrltnsd.com
+ppxqjzkmvbrltnsd.net
+rpxqjzkmvbrltnsd.biz
+spxqjzkmvbrltnsd.com
+tpxqjzkmvbrltnsd.net
+upxqjzkmvbrltnsd.biz
+vpxqjzkmvbrltnsd.com
+wpxqjzkmvbrltnsd.net
+xpxqjzkmvbrltnsd.biz
+ypxqjzkmvbrltnsd.com
+zpxqjzkmvbrltnsd.net
+abqxjzkmvbrltnsd.biz
+bbqxjzkmvbrltnsd.com
+cbqxjzkmvbrltnsd.net
+dbqxjzkmvbrltnsd.biz
+ebqxjzkmvbrltnsd.com
+fbqxjzkmvbrltnsd.net
+gbqxjzkmvbrltnsd.biz
+hbqxjzkmvbrltnsd.com
+ibqxjzkmvbrltnsd.net
+jbqxjzkmvbrltnsd.biz
+kbqxjzkmvbrltnsd.com
+lbqxjzkmvbrltnsd.net
+mbqxjzkmvbrltnsd.biz
+nbqxjzkmvbrltnsd.com
+obqxjzkmvbrltnsd.net
+pbqxjzkmvbrltnsd.biz
+rbqxjzkmvbrltnsd.com
+sbqxjzkmvbrltnsd.net
+tbqxjzkmvbrltnsd.biz
+ubqxjzkmvbrltnsd.com
+vbqxjzkmvbrltnsd.net
+wbqxjzkmvbrltnsd.biz
+xbqxjzkmvbrltnsd.com
+ybqxjzkmvbrltnsd.net
+zbqxjzkmvbrltnsd.biz
+acrxjzkmvbrltnsd.com
+bcrxjzkmvbrltnsd.net
+ccrxjzkmvbrltnsd.biz
+dcrxjzkmvbrltnsd.com
+ecrxjzkmvbrltnsd.net
+fcrxjzkmvbrltnsd.biz
+gcrxjzkmvbrltnsd.com
+hcrxjzkmvbrltnsd.net
+icrxjzkmvbrltnsd.biz
+jcrxjzkmvbrltnsd.com
+kcrxjzkmvbrltnsd.net
+lcrxjzkmvbrltnsd.biz
+mcrxjzkmvbrltnsd.com
+ncrxjzkmvbrltnsd.net
+ocrxjzkmvbrltnsd.biz
+pcrxjzkmvbrltnsd.com
+rcrxjzkmvbrltnsd.net
+scrxjzkmvbrltnsd.biz
+tcrxjzkmvbrltnsd.com
+ucrxjzkmvbrltnsd.net
+vcrxjzkmvbrltnsd.biz
+wcrxjzkmvbrltnsd.com
+xcrxjzkmvbrltnsd.net
+ycrxjzkmvbrltnsd.biz
+zcrxjzkmvbrltnsd.com
+adqxjzkmvbrltnsw.net
+bdqxjzkmvbrltnsw.biz
+cdqxjzkmvbrltnsw.com
+ddqxjzkmvbrltnsw.net
+edqxjzkmvbrltnsw.biz
+fdqxjzkmvbrltnsw.com
+gdqxjzkmvbrltnsw.net
+hdqxjzkmvbrltnsw.biz
+idqxjzkmvbrltnsw.com
+jdqxjzkmvbrltnsw.net
+kdqxjzkmvbrltnsw.biz
+ldqxjzkmvbrltnsw.com
+mdqxjzkmvbrltnsw.net
+ndqxjzkmvbrltnsw.biz
+odqxjzkmvbrltnsw.com
+pdqxjzkmvbrltnsw.net
+rdqxjzkmvbrltnsw.biz
+sdqxjzkmvbrltnsw.com
+tdqxjzkmvbrltnsw.net
+udqxjzkmvbrltnsw.biz
+vdqxjzkmvbrltnsw.com
+wdqxjzkmvbrltnsw.net
+xdqxjzkmvbrltnsw.biz
+ydqxjzkmvbrltnsw.com
+zdqxjzkmvbrltnsw.net

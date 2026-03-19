@@ -1,0 +1,100 @@
+# File: lateral-movement.rules
+# SID range: 9001001 - 9001099
+
+# SMB multi-host internal scan
+alert smb $HOME_NET any -> $HOME_NET 445 (
+    msg:"LATERAL MOVEMENT SMB Multi-Host Internal Scan";
+    flow:established,to_server;
+    threshold:type both, track by_src, count 5, seconds 180;
+    classtype:attempted-recon;
+    sid:9001001; rev:1;
+    metadata:mitre_id T1021.002;
+)
+
+# PsExec binary drop via SMB
+alert smb $HOME_NET any -> $HOME_NET 445 (
+    msg:"LATERAL MOVEMENT PsExec Service Binary Drop";
+    flow:established,to_server;
+    smb.named_pipe; content:"PSEXESVC";
+    classtype:trojan-activity;
+    sid:9001002; rev:1;
+    metadata:mitre_id T1569.002;
+)
+
+# Admin share access
+alert smb $HOME_NET any -> $HOME_NET 445 (
+    msg:"LATERAL MOVEMENT SMB Admin Share Access";
+    flow:established,to_server;
+    smb.tree; content:"ADMIN$";
+    threshold:type limit, track by_src, count 1, seconds 300;
+    classtype:policy-violation;
+    sid:9001003; rev:1;
+    metadata:mitre_id T1021.002;
+)
+
+# WMI DCOM remote execution
+alert tcp $HOME_NET any -> $HOME_NET 135 (
+    msg:"LATERAL MOVEMENT WMI DCOM Remote Execution";
+    flow:established,to_server;
+    content:"|05 00 0b|";
+    threshold:type both, track by_src, count 3, seconds 180;
+    classtype:trojan-activity;
+    sid:9001004; rev:1;
+    metadata:mitre_id T1047;
+)
+
+# NTLM Pass-the-Hash
+alert tcp $HOME_NET any -> $HOME_NET 445 (
+    msg:"LATERAL MOVEMENT NTLM Pass-the-Hash Type1 No Username";
+    flow:established,to_server;
+    content:"NTLMSSP"; offset:0; depth:7;
+    content:"|01 00 00 00|"; distance:8; within:4;
+    content:!"|00|"; distance:28; within:1;
+    threshold:type both, track by_src, count 5, seconds 180;
+    classtype:trojan-activity;
+    sid:9001005; rev:1;
+    metadata:mitre_id T1550.002;
+)
+
+# Remote service creation via SCM
+alert smb $HOME_NET any -> $HOME_NET 445 (
+    msg:"LATERAL MOVEMENT Remote Service Creation via SCM";
+    flow:established,to_server;
+    smb.named_pipe; content:"svcctl";
+    threshold:type limit, track by_src, count 1, seconds 300;
+    classtype:trojan-activity;
+    sid:9001006; rev:1;
+    metadata:mitre_id T1569.002;
+)
+
+# Internal RDP connection
+alert tcp $HOME_NET any -> $HOME_NET 3389 (
+    msg:"LATERAL MOVEMENT Internal RDP Connection";
+    flow:established,to_server;
+    threshold:type both, track by_src, count 3, seconds 600;
+    classtype:policy-violation;
+    sid:9001007; rev:1;
+    metadata:mitre_id T1021.001;
+)
+
+# RDP brute force external
+alert tcp $EXTERNAL_NET any -> $HOME_NET 3389 (
+    msg:"LATERAL MOVEMENT RDP Brute Force External";
+    flow:stateless;
+    flags:S;
+    threshold:type both, track by_src, count 10, seconds 300;
+    classtype:attempted-user;
+    sid:9001008; rev:1;
+    metadata:mitre_id T1110.001;
+)
+
+# Named pipe impersonation
+alert smb $HOME_NET any -> $HOME_NET 445 (
+    msg:"LATERAL MOVEMENT Named Pipe Impersonation Attempt";
+    flow:established,to_server;
+    smb.named_pipe; content:"\\pipe\\";
+    content:"ImpersonateNamedPipe";
+    classtype:trojan-activity;
+    sid:9001009; rev:1;
+    metadata:mitre_id T1134.001;
+)

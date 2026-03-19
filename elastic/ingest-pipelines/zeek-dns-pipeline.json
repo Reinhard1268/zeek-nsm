@@ -1,0 +1,61 @@
+{
+  "_meta": {
+    "file": "zeek-dns-pipeline.json",
+    "location": "05-zeek-nsm/elastic/ingest-pipelines/zeek-dns-pipeline.json",
+    "description": "Zeek dns.log ingest pipeline for Elasticsearch 8.x"
+  },
+  "description": "Zeek dns.log ingest pipeline — maps fields to ECS",
+  "processors": [
+    { "set": { "field": "event.dataset", "value": "zeek.dns" } },
+    { "set": { "field": "event.module",  "value": "zeek" } },
+    {
+      "date": {
+        "field": "ts",
+        "formats": ["UNIX"],
+        "target_field": "@timestamp",
+        "ignore_failure": false
+      }
+    },
+    { "rename": { "field": "id.orig_h", "target_field": "source.ip",        "ignore_missing": true } },
+    { "rename": { "field": "id.orig_p", "target_field": "source.port",      "ignore_missing": true } },
+    { "rename": { "field": "id.resp_h", "target_field": "destination.ip",   "ignore_missing": true } },
+    { "rename": { "field": "id.resp_p", "target_field": "destination.port", "ignore_missing": true } },
+    { "rename": { "field": "proto",     "target_field": "network.transport", "ignore_missing": true } },
+    { "rename": { "field": "query",     "target_field": "dns.question.name",         "ignore_missing": true } },
+    { "rename": { "field": "qtype_name","target_field": "dns.question.type",         "ignore_missing": true } },
+    { "rename": { "field": "rcode_name","target_field": "dns.response_code",         "ignore_missing": true } },
+    { "rename": { "field": "answers",   "target_field": "dns.answers",               "ignore_missing": true } },
+    { "rename": { "field": "TTLs",      "target_field": "zeek.dns.TTLs",             "ignore_missing": true } },
+    { "rename": { "field": "trans_id",  "target_field": "dns.id",                    "ignore_missing": true } },
+    { "rename": { "field": "rtt",       "target_field": "zeek.dns.rtt",              "ignore_missing": true } },
+    { "rename": { "field": "AA",        "target_field": "zeek.dns.AA",               "ignore_missing": true } },
+    { "rename": { "field": "TC",        "target_field": "zeek.dns.TC",               "ignore_missing": true } },
+    { "rename": { "field": "RD",        "target_field": "zeek.dns.RD",               "ignore_missing": true } },
+    { "rename": { "field": "RA",        "target_field": "zeek.dns.RA",               "ignore_missing": true } },
+    { "rename": { "field": "rejected",  "target_field": "zeek.dns.rejected",         "ignore_missing": true } },
+    {
+      "script": {
+        "lang": "painless",
+        "description": "Extract registered domain from DNS question name",
+        "source": "if (ctx.dns?.question?.name != null) { def parts = ctx.dns.question.name.splitOnToken('.'); if (parts.length >= 2) { ctx.dns.question.registered_domain = parts[parts.length-2] + '.' + parts[parts.length-1]; } }"
+      }
+    },
+    {
+      "script": {
+        "lang": "painless",
+        "description": "Calculate domain label length for DGA detection",
+        "source": "if (ctx.dns?.question?.name != null) { def parts = ctx.dns.question.name.splitOnToken('.'); if (parts.length > 0) { ctx.zeek = ctx.zeek ?: [:]; ctx.zeek.dns = ctx.zeek.dns ?: [:]; ctx.zeek.dns.first_label_length = parts[0].length(); } }"
+      }
+    },
+    { "geoip": { "field": "destination.ip", "target_field": "destination.geo", "ignore_missing": true, "ignore_failure": true } },
+    { "geoip": { "field": "source.ip",      "target_field": "source.geo",      "ignore_missing": true, "ignore_failure": true } },
+    { "set": { "field": "event.kind",     "value": "event" } },
+    { "set": { "field": "event.category", "value": ["network"] } },
+    { "set": { "field": "event.type",     "value": ["protocol", "info"] } },
+    { "remove": { "field": ["ts", "uid", "_write_ts", "qtype", "qclass", "qclass_name", "rcode"], "ignore_missing": true } }
+  ],
+  "on_failure": [
+    { "set": { "field": "error.message", "value": "{{ _ingest.on_failure_message }}" } },
+    { "set": { "field": "event.dataset", "value": "zeek.dns" } }
+  ]
+}
